@@ -47,3 +47,11 @@ Anylist es una API para Lorem ipsum dolor sit amet consectetur adipisicing elit.
     ```
 
 ---
+
+### Dependencies
+Las dependencias que estén con un "-D" se usarán sólo en desarrollo.
+
+- yarn add nestjs-pino pino-http
+- yarn add -D pino-pretty
+- yarn add @nestjs/config
+- yarn add @nestjs/typeorm typeorm pg
