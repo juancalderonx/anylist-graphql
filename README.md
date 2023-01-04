@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: space-around; align-items: center;">
+<div style="display: flex !important; justify-content: space-around !important; align-items: center !important;">
   <p align="center">
     <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
   </p>
@@ -55,3 +55,5 @@ Las dependencias que estén con un "-D" se usarán sólo en desarrollo.
 - yarn add -D pino-pretty
 - yarn add @nestjs/config
 - yarn add @nestjs/typeorm typeorm pg
+- yarn add class-validator
+- yarn add  class-transformer
