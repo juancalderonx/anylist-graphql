@@ -14,6 +14,7 @@ import { EnvConfiguration } from './config/env.config';
 import { ItemsModule } from './items/items.module';
 import { CorrelationIdMiddleware, CORRELATION_ID_HEADER } from './common/middlewares/correlation-id.middleware';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -67,6 +68,8 @@ import { UsersModule } from './users/users.module';
     ItemsModule,
 
     UsersModule,
+
+    AuthModule,
 
 
   ],
