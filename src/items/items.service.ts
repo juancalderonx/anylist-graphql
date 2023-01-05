@@ -1,19 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { CreateItemInput } from './dto/create-item.input';
-import { UpdateItemInput } from './dto/update-item.input';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Item } from './entities/item.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateItemInput, UpdateItemInput } from './dto/inputs';
 
 @Injectable()
 export class ItemsService {
-  create(createItemInput: CreateItemInput) {
-    return 'This action adds a new item';
+
+  private readonly logger = new Logger(ItemsService.name);
+
+  constructor(
+    @InjectRepository(Item)
+    private readonly itemsRepository: Repository<Item>
+  ){}
+
+  async create(itemDto: CreateItemInput): Promise<Item> {
+    this.logger.log(`Service | Returning a item created.`);
+
+    const newItem = this.itemsRepository.create(itemDto);
+    return await this.itemsRepository.save(newItem);
   }
 
-  findAll() {
-    return [];
+  async findAll(): Promise<Item[]> {
+    // TODO: Pagination, filters with args...
+    this.logger.log(`Service | Returning all items.`);
+    return this.itemsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} item`;
+  async findOne(id: string): Promise<Item> {
+    const item = await this.itemsRepository.findOneBy({id: id});
+
+    if(!item) {
+      this.logger.error(`Service | Error: Item with id ${id} not found.`);
+      throw new NotFoundException(`Error: Item with id ${id} not found.`);
+    }
+
+    this.logger.log(`Service | Returning item with id '${id}'`);
+    return item;
   }
 
   update(id: number, updateItemInput: UpdateItemInput) {
