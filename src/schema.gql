@@ -7,6 +7,7 @@ type Item {
   name: String!
   quantity: Float!
   quantityUnits: String!
+  status: String!
 }
 
 type Query {
@@ -17,7 +18,8 @@ type Query {
 type Mutation {
   createItem(itemDto: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
-  removeItem(id: Int!): Item!
+  removeItemDeprecated(id: ID!): Item! @deprecated(reason: "No queremos eliminar datos del todo, sólo queremos actualizar su estado, revisar la función removeItem()")
+  removeItem(id: ID!): Item!
 }
 
 input CreateItemInput {
@@ -29,6 +31,9 @@ input CreateItemInput {
 
   """Quantity type of item"""
   quantityUnits: String!
+
+  """Status of item"""
+  status: String! = "active"
 }
 
 input UpdateItemInput {
@@ -40,5 +45,8 @@ input UpdateItemInput {
 
   """Quantity type of item"""
   quantityUnits: String
-  id: Int!
+
+  """Status of item"""
+  status: String = "active"
+  id: ID!
 }

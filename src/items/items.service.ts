@@ -39,11 +39,26 @@ export class ItemsService {
     return item;
   }
 
-  update(id: number, updateItemInput: UpdateItemInput) {
-    return `This action updates a #${id} item`;
+  async update(id: string, updateItemInput: UpdateItemInput): Promise<Item> {
+    const item = await this.itemsRepository.preload(updateItemInput);
+
+    if(!item) throw new NotFoundException(`Item with id ${id} not found`);
+
+    return this.itemsRepository.save(item);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} item`;
+  async removeSoft(id: string): Promise<Item> {
+
+    // TODO: Referencial integrity
+
+    const item = await this.findOne(id);
+    item.status = 'erased';
+    return this.itemsRepository.save(item);
+  }
+
+  async remove(id: string): Promise<Item> {
+    const item = await this.findOne(id);
+    await this.itemsRepository.delete(item);
+    return item;
   }
 }

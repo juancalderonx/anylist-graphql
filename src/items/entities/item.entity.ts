@@ -21,4 +21,8 @@ export class Item {
   @Column()
   quantityUnits: string;
 
+  @Field( () => String )
+  @Column()
+  status: string;
+
 }

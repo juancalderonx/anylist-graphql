@@ -33,14 +33,26 @@ export class ItemsResolver {
   }
 
   @Mutation(() => Item)
-  updateItem(@Args('updateItemInput') updateItemInput: UpdateItemInput) {
+  async updateItem(@Args('updateItemInput') updateItemInput: UpdateItemInput): Promise<Item> {
     this.logger.log(`Mutation | Trying to update item by ID.`);
     return this.itemsService.update(updateItemInput.id, updateItemInput);
   }
 
-  @Mutation(() => Item)
-  removeItem(@Args('id', { type: () => Int }) id: number) {
+  @Mutation( () => Item,
+    {
+      name: 'removeItemDeprecated',
+      deprecationReason: 'No queremos eliminar datos del todo, sólo queremos actualizar su estado, revisar la función removeItem()'
+    }
+  )
+  async deleteItem(@Args('id', { type: () => ID }) id: string): Promise<Item> {
     this.logger.log(`Mutation | Trying to delete an item by id.`);
     return this.itemsService.remove(id);
   }
+
+  @Mutation(() => Item)
+  async removeItem(@Args('id', { type: () => ID }) id: string): Promise<Item> {
+    this.logger.log(`Mutation | Trying change status to 'erased' item by ID.`);
+    return this.itemsService.removeSoft(id);
+  }
+
 }
