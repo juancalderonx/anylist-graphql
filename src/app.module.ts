@@ -13,6 +13,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { EnvConfiguration } from './config/env.config';
 import { ItemsModule } from './items/items.module';
 import { CorrelationIdMiddleware, CORRELATION_ID_HEADER } from './common/middlewares/correlation-id.middleware';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -64,6 +65,8 @@ import { CorrelationIdMiddleware, CORRELATION_ID_HEADER } from './common/middlew
     }),
 
     ItemsModule,
+
+    UsersModule,
 
 
   ],

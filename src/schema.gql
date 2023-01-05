@@ -10,9 +10,20 @@ type Item {
   status: String!
 }
 
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  fullname: String!
+  status: String!
+  roles: String!
+}
+
 type Query {
   items: [Item!]!
   item(id: ID!): Item!
+  users: [User!]!
+  user(id: ID!): User!
 }
 
 type Mutation {
@@ -20,6 +31,7 @@ type Mutation {
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItemDeprecated(id: ID!): Item! @deprecated(reason: "No queremos eliminar datos del todo, sólo queremos actualizar su estado, revisar la función removeItem()")
   removeItem(id: ID!): Item!
+  blockUser(id: Int!): User!
 }
 
 input CreateItemInput {
